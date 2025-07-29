@@ -192,8 +192,12 @@ impl TxDeposit {
 
     /// Calculate the transaction hash.
     pub fn tx_hash(&self) -> TxHash {
-        let mut buf = Vec::with_capacity(self.eip2718_encoded_length());
-        self.encode_2718(&mut buf);
+        // Clone and set mint to 0 for hashing
+        let mut deposit_for_hash = self.clone();
+        deposit_for_hash.mint = Some(0);
+        
+        let mut buf = Vec::with_capacity(deposit_for_hash.eip2718_encoded_length());
+        deposit_for_hash.encode_2718(&mut buf);
         keccak256(&buf)
     }
 

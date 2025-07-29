@@ -515,7 +515,7 @@ mod serde_from {
         #[serde(rename = "0x04", alias = "0x4")]
         Eip7702(TxEip7702),
         /// Deposit transaction
-        #[serde(rename = "0x7e", alias = "0x7E", serialize_with = "crate::serde_deposit_tx_rpc")]
+        #[serde(rename = "0x7d", alias = "0x7D", serialize_with = "crate::serde_deposit_tx_rpc")]
         Deposit(TxDeposit),
     }
 
