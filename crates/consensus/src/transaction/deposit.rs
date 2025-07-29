@@ -577,6 +577,67 @@ mod tests {
 
         assert!(total_len > len_without_header);
     }
+
+    #[test]
+    fn test_deposit_hash_ignores_mint() {
+        // Create two deposit transactions that are identical except for mint value
+        let deposit_with_mint = TxDeposit {
+            from: Address::left_padding_from(&[0x11; 20]),
+            to: TxKind::Call(Address::left_padding_from(&[0x22; 20])),
+            value: U256::from(100),
+            gas_limit: 1000,
+            mint: Some(123456789), // Has mint value
+            is_system_transaction: false,
+            source_hash: B256::from([1u8; 32]),
+            input: Bytes::default(),
+        };
+        
+        let deposit_without_mint = TxDeposit {
+            from: Address::left_padding_from(&[0x11; 20]),
+            to: TxKind::Call(Address::left_padding_from(&[0x22; 20])),
+            value: U256::from(100),
+            gas_limit: 1000,
+            mint: None, // No mint value
+            is_system_transaction: false,
+            source_hash: B256::from([1u8; 32]),
+            input: Bytes::default(),
+        };
+        
+        // Hash both transactions
+        let hash_with_mint = deposit_with_mint.tx_hash();
+        let hash_without_mint = deposit_without_mint.tx_hash();
+        
+        // They should have the same hash since mint is ignored for hashing
+        assert_eq!(hash_with_mint, hash_without_mint, 
+            "Deposit transaction hashes should be identical regardless of mint value");
+        
+        // Also test with seal_slow
+        let sealed_with_mint = deposit_with_mint.clone().seal_slow();
+        let sealed_without_mint = deposit_without_mint.clone().seal_slow();
+        
+        assert_eq!(sealed_with_mint.hash(), sealed_without_mint.hash(),
+            "Sealed deposit hashes should be identical regardless of mint value");
+        
+        // But the mint values should still be preserved in the transaction
+        assert_eq!(sealed_with_mint.mint, Some(123456789));
+        assert_eq!(sealed_without_mint.mint, None);
+
+        // Additional test: different mint values should also produce the same hash
+        let deposit_different_mint = TxDeposit {
+            from: Address::left_padding_from(&[0x11; 20]),
+            to: TxKind::Call(Address::left_padding_from(&[0x22; 20])),
+            value: U256::from(100),
+            gas_limit: 1000,
+            mint: Some(987654321), // Different mint value
+            is_system_transaction: false,
+            source_hash: B256::from([1u8; 32]),
+            input: Bytes::default(),
+        };
+        
+        let hash_different_mint = deposit_different_mint.tx_hash();
+        assert_eq!(hash_with_mint, hash_different_mint,
+            "Deposit transaction hashes should be identical regardless of different mint values");
+    }
 }
 
 /// Bincode-compatible [`TxDeposit`] serde implementation.
