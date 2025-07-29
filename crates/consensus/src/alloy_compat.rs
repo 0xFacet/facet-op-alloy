@@ -84,7 +84,7 @@ mod tests {
   "sourceHash": "0x990d7122a1f121f3a6bc45723e28f4921c269037a77e77ffee3c8585136d1a92",
   "to": "0x4200000000000000000000000000000000000015",
   "transactionIndex": "0x0",
-  "type": "0x7e",
+  "type": "0x7d",
   "v": "0x0",
   "value": "0x0"
 }"#;
@@ -118,7 +118,7 @@ mod tests {
   "sourceHash": "0x990d7122a1f121f3a6bc45723e28f4921c269037a77e77ffee3c8585136d1a92",
   "to": "0x4200000000000000000000000000000000000015",
   "transactionIndex": "0x0",
-  "type": "0x7e",
+  "type": "0x7d",
   "v": "0x0",
   "value": "0x0"
 }"#;

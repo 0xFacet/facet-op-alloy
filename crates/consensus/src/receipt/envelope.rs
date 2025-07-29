@@ -42,10 +42,10 @@ pub enum OpReceiptEnvelope<T = Log> {
     /// [EIP-7702]: https://eips.ethereum.org/EIPS/eip-7702
     #[cfg_attr(feature = "serde", serde(rename = "0x4", alias = "0x04"))]
     Eip7702(ReceiptWithBloom<Receipt<T>>),
-    /// Receipt envelope with type flag 126, containing a [deposit] receipt.
+    /// Receipt envelope with type flag 125, containing a [deposit] receipt.
     ///
     /// [deposit]: https://specs.optimism.io/protocol/deposits.html
-    #[cfg_attr(feature = "serde", serde(rename = "0x7e", alias = "0x7E"))]
+    #[cfg_attr(feature = "serde", serde(rename = "0x7d", alias = "0x7D"))]
     Deposit(ReceiptWithBloom<OpDepositReceipt<T>>),
 }
 

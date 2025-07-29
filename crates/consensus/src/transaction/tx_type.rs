@@ -7,7 +7,7 @@ use alloy_rlp::{BufMut, Decodable, Encodable};
 use derive_more::Display;
 
 /// Identifier for an Optimism deposit transaction
-pub const DEPOSIT_TX_TYPE_ID: u8 = 126; // 0x7E
+pub const DEPOSIT_TX_TYPE_ID: u8 = 125; // 0x7D
 
 /// Optimism `TransactionType` flags as specified in EIPs [2718], [1559], and
 /// [2930], as well as the [deposit transaction spec][deposit-spec]
@@ -37,7 +37,7 @@ pub enum OpTxType {
     Eip7702 = 4,
     /// Optimism Deposit transaction type.
     #[display("deposit")]
-    Deposit = 126,
+    Deposit = 125,
 }
 
 impl OpTxType {
@@ -80,7 +80,7 @@ impl TryFrom<u8> for OpTxType {
             1 => Self::Eip2930,
             2 => Self::Eip1559,
             4 => Self::Eip7702,
-            126 => Self::Deposit,
+            125 => Self::Deposit,
             _ => return Err(Eip2718Error::UnexpectedType(value)),
         })
     }
@@ -143,7 +143,7 @@ impl Typed2718 for OpTxType {
 impl IsTyped2718 for OpTxType {
     fn is_type(type_id: u8) -> bool {
         // legacy | eip2930 | eip1559 | eip7702 | deposit
-        matches!(type_id, 0 | 1 | 2 | 4 | 126)
+        matches!(type_id, 0 | 1 | 2 | 4 | 125)
     }
 }
 

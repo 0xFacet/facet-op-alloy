@@ -263,7 +263,7 @@ mod tests {
         "to": "0x4200000000000000000000000000000000000015",
         "transactionHash": "0xb7c74afdeb7c89fb9de2c312f49b38cb7a850ba36e064734c5223a477e83fdc9",
         "transactionIndex": "0x0",
-        "type": "0x7e",
+        "type": "0x7d",
         "l1GasPrice": "0x3ef12787",
         "l1GasUsed": "0x1177",
         "l1Fee": "0x5bf1ab43d",
